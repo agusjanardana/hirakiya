@@ -1,0 +1,9 @@
+Penjelasan
+
+di layout kalau @yield -> ngambil di pages
+di pages ketik section('namayield')
+
+untuk script
+bisa gunakan :stack
+
+dan untuk masukin script tambahan pake :push
