@@ -81,9 +81,6 @@ Store Dashboard Transactions
                                 </div>
                             </a>
                             @endforelse
-                            @foreach ($buyTransactions as $buy)
-
-                            @endforeach
                         </div>
                     </div>
                 </div>

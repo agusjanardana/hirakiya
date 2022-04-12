@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
 
@@ -16,9 +14,9 @@
     {{-- menambahkan --}}
     @include('includes.style')
     @stack('addon-style')
-  </head>
+</head>
 
-  <body>
+<body>
     <!-- Navigation -->
     @include('includes.navbar')
 
@@ -26,13 +24,14 @@
     @yield('content')
 
 
-   <!-- FOOTER -->
-   @include('includes.footer')
+    <!-- FOOTER -->
+    @include('includes.footer')
 
     <!-- Bootstrap core JavaScript -->
     @stack('prepend-script')
     {{-- menambahkan --}}
     @include('includes.script')
     @stack('addon-script')
-  </body>
+</body>
+
 </html>

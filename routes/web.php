@@ -21,8 +21,6 @@ Route::get('/categories/{id}', 'CategoryController@detail')->name('categories-de
 Route::get('/details/{id?}', 'DetailController@index')->name('detail');
 Route::post('/details/{id?}', 'DetailController@add')->name('detail-add');
 
-
-
 Route::get('/success', 'CartController@success')->name('success');
 
 Route::post('/checkout/callback', 'CheckoutController@callback')->name('midtrans-callback');
@@ -39,6 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/transactions', 'DashboardTransactionController@index')->name('dashboard-transaction');
     Route::get('/dashboard/transactions/{id}', 'DashboardTransactionController@details')->name('dashboard-transaction-details'); // {id}
     Route::get('/dashboard/products', 'DashboardProductController@index')->name('dashboard-product');
+    Route::post('/dashboard/transactions/{id}', 'DashboardTransactionController@update')->name('dashboard-transaction-update'); // {id}
+
 
     Route::get('/dashboard/products/create', 'DashboardProductController@create')->name('dashboard-product-create');
     Route::post('/dashboard/products/store', 'DashboardProductController@store')->name('dashboard-product-store');
@@ -51,6 +51,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/settings', 'DashboardSettingController@store')->name('dashboard-settings-store');
     Route::get('/dashboard/account', 'DashboardSettingController@account')->name('dashboard-settings-account');
     Route::post('/dashboard/account/{redirect}', 'DashboardSettingController@update')->name('dashboard-settings-redirect');
+
+    Route::get('/wishlist', 'WishlistController@index')->name('wishlist');
 });
 
 Route::prefix('admin')

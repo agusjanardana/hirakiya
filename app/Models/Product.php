@@ -36,4 +36,10 @@ class Product extends Model
         // select User.id == products.users_id
 
     }
+
+    public function review()
+    {
+        return $this->hasMany(Review::class, 'products_id', 'id');
+        // select Review.products_id == product.id
+    }
 }
