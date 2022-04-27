@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Wishlist;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
@@ -15,7 +16,8 @@ class WishlistController extends Controller
      */
     public function index()
     {
-        return view('pages.wishlist');
+        $wishlists = Wishlist::with(['product', 'product.user', 'product.galleries'])->where('users_id', Auth::user()->id)->paginate(10);
+        return view('pages.wishlist', compact('wishlists'));
     }
 
     /**
@@ -38,7 +40,10 @@ class WishlistController extends Controller
     {
         $data = $request->all();
         try{
-            Wishlist::create($data);
+            Wishlist::create([
+                'products_id' => $data['products_id'],
+                'users_id' => Auth::user()->id,
+            ]);
             return redirect()->route('wishlist');
         } catch(Exception $e){
             return redirect()->back()->with('error', $e->getMessage());
@@ -92,6 +97,7 @@ class WishlistController extends Controller
         try{
             if($wishlist){
                 $wishlist->delete();
+                return redirect()->route('wishlist');
             };
         } catch(Exception $e){
             return redirect()->back()->with('error', $e->getMessage());

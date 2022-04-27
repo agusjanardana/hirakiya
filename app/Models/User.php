@@ -32,7 +32,8 @@ class User extends Authenticatable
         'regencies_id',
         'zip_code',
         'country',
-        'phone_number'
+        'phone_number',
+        'user_photo'
     ];
 
     /**

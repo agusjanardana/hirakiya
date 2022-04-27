@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\DynamicFrontend;
 use App\Models\Product;
 
 class HomeController extends Controller
@@ -19,9 +20,11 @@ class HomeController extends Controller
     {
         $categories = Category::take(6)->get();
         $products = Product::with('galleries')->take(8)->get();
+        $slider = DynamicFrontend::take(3)->get();
         return view('pages.home', [
             'categories' => $categories,
-            'products' => $products
+            'products' => $products,
+            'sliders' => $slider
         ]);
     }
 }

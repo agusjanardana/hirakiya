@@ -1,14 +1,11 @@
 @extends('layouts.admin')
 
 @section('title')
-    product
+Product
 @endsection
 
 @section('content')
-<div
-    class="section-content section-dashboard-home"
-    data-aos="fade-up"
-    >
+<div class="section-content section-dashboard-home" data-aos="fade-up">
     <div class="container-fluid">
         <div class="dashboard-heading">
             <h2 class="dashboard-title">product</h2>
@@ -23,7 +20,7 @@
                                 + Tambah Product Baru
                             </a>
                             <div class="table-responsive">
-                                <table class="table table-hover scroll-horizontal-vertical w-100" id ="crudTable">
+                                <table class="table table-hover scroll-horizontal-vertical w-100" id="crudTable">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -41,11 +38,11 @@
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-</div>
-@endsection
+    @endsection
 
-@push('addon-script')
+    @push('addon-script')
     <script>
         var datatable = $('#crudTable').DataTable({
             processing : true,
@@ -69,4 +66,4 @@
             ]
         })
     </script>
-@endpush
+    @endpush

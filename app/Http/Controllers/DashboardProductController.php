@@ -55,7 +55,6 @@ class DashboardProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->all(); // req dari client form
-
         $data['slug'] = Str::slug($request->name);
         $product = Product::create($data);
 

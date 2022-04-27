@@ -12,4 +12,14 @@ class Wishlist extends Model
     protected $fillable = [
         'products_id', 'users_id'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product', 'products_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'users_id');
+    }
 }

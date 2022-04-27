@@ -42,4 +42,9 @@ class Product extends Model
         return $this->hasMany(Review::class, 'products_id', 'id');
         // select Review.products_id == product.id
     }
+
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class, 'products_id', 'id');
+    }
 }

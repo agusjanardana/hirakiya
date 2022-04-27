@@ -93,6 +93,16 @@ Dashboard Account
                         value="{{ $user->phone_number }}" />
                     </div>
                   </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="" class="user_photo">User Photo</label>
+                      <input type="file" class="form-control pt-1" name="user_photo" />
+                      @if ($user->user_photo)
+                      <label>Your Current Photo : </label>
+                      <img class="" style="width: 50px; height: 50px;" src="{{ Storage::url($user->user_photo) }}" />
+                      @endif
+                    </div>
+                  </div>
                 </div>
                 <div class="row">
                   <div class="col text-right">

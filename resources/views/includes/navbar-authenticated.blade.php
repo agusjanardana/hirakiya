@@ -26,8 +26,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <img src="/images/icon-user.png" alt="" class="rounded-circle mr-2 profile-picture" />
-                        Hi, Angga
+                        <img src="{{ Auth::user()->user_photo ? Storage::url(Auth::user()->user_photo) : '/images/icon-user.png' }}"
+                            alt="" class="rounded-circle mr-2 profile-picture" />
+                        Hi, {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/dashboard.html">Dashboard</a>

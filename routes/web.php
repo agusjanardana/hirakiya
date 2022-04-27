@@ -51,8 +51,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/settings', 'DashboardSettingController@store')->name('dashboard-settings-store');
     Route::get('/dashboard/account', 'DashboardSettingController@account')->name('dashboard-settings-account');
     Route::post('/dashboard/account/{redirect}', 'DashboardSettingController@update')->name('dashboard-settings-redirect');
-
+    
     Route::get('/wishlist', 'WishlistController@index')->name('wishlist');
+    Route::post('/wishlist', 'WishlistController@store')->name('wishlist-store');
+    Route::get('/wishlist/{id}', 'WishlistController@destroy')->name('wishlist-delete');
 });
 
 Route::prefix('admin')
@@ -65,6 +67,7 @@ Route::prefix('admin')
         Route::resource('product', 'ProductController');
         Route::resource('product-gallery', 'ProductGalleryController');
         Route::resource('transaction', 'DashboardTransactionController');
+        Route::resource('dynamicfe', 'DynamicFrontendController');
     });
 
 Auth::routes();

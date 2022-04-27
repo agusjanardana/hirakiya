@@ -32,7 +32,6 @@ class ProductController extends Controller
     {
         if (request()->ajax()) {
             $query = Product::with(['User', 'Category']); // relasi dengan model User dan model Category
-
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
                     return '

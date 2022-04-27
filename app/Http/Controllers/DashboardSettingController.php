@@ -36,8 +36,11 @@ class DashboardSettingController extends Controller
     public function update(Request $request, $redirect)
     {
         $data = $request->all();
+        // check if data has file images , if true save it to storage
+        if ($request->hasFile('user_photo')) {
+            $data['user_photo'] = $request->file('user_photo')->store('assets/user', 'public');
+        }
         $item = Auth::user();
-
         $item->update($data);
 
         return redirect()->route($redirect);

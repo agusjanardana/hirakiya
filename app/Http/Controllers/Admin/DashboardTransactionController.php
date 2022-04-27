@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardTransactionController extends Controller
 {
@@ -14,7 +16,18 @@ class DashboardTransactionController extends Controller
      */
     public function index()
     {
-        return view('pages.admin.transaction.index');
+        // memanggil relasi pake titik, transaction.user
+        $sellTransactions = TransactionDetail::with(['transaction.user', 'product.galleries'])
+        ->whereHas('product')->get();
+
+        // memanggil relasi pake titik, transaction.user
+        $buyTransactions = TransactionDetail::with(['transaction.user', 'product.galleries'])
+        ->whereHas('transaction')->get();
+
+        return view('pages.admin.transaction.index',[
+            'sellTransactions' => $sellTransactions,
+            'buyTransactions' => $buyTransactions
+        ]);
     }
     public function details()
     {
