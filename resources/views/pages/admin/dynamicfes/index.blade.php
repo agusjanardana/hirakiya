@@ -10,15 +10,15 @@ Manage Frontend
         <div class="dashboard-heading">
             <h2 class="dashboard-title">Dynamic Frontend</h2>
             <p class="dashboard-subtitle">List of Image Slider</p>
-            <small>YKamu dapat upload maksimal 3 banner saja.</small>
+            <small>Disini kamu bisa mengupload image slider kamu untuk halaman homepage.</small>
         </div>
         <div class="dashboard-content">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <a href="{{route('dynamicfe.store')}}" class="btn btn-primary mb-3">
-                                +
+                            <a href="{{route('dynamicfe.create')}}" class="btn btn-primary mb-3">
+                                Tambah Banner
                             </a>
                             <div class="table-responsive">
                                 <table class="table table-hover scroll-horizontal-vertical w-100" id="tabelFe">
@@ -52,11 +52,11 @@ Manage Frontend
             },
             columns : [
                 { data : 'id' , nama : 'id'},
-                { data : 'photos', nama: 'photos'},
+                { data : 'photos', name: 'photos'},
                 { data : 'created_at' , nama : 'created_at'}, 
                 {
                     data : 'action',
-                    nama : 'action',
+                    name : 'action',
                     orderable : 'false',
                     width : '15%'
                 },

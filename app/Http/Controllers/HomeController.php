@@ -20,7 +20,7 @@ class HomeController extends Controller
     {
         $categories = Category::take(6)->get();
         $products = Product::with('galleries')->take(8)->get();
-        $slider = DynamicFrontend::take(3)->get();
+        $slider = DynamicFrontend::where('status', 1)->get();
         return view('pages.home', [
             'categories' => $categories,
             'products' => $products,
