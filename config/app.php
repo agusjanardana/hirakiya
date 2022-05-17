@@ -162,6 +162,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        // laracombe
+        Amranidev\Laracombee\Providers\LaracombeeServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -227,7 +230,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Laracombee' => Amranidev\Laracombee\Facades\LaracombeeFacade::class,
     ],
 
 ];

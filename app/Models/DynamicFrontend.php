@@ -10,6 +10,7 @@ class DynamicFrontend extends Model
     use HasFactory;
 
     protected $fillable = [
-       'photos'
+       'photos',
+       'status'
     ];
 }

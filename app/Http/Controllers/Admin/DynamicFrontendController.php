@@ -15,31 +15,27 @@ class DynamicFrontendController extends Controller
     // get request from FE and save the photo array max 3 to storage
     public function store(Request $request){
         try{
-            if($request->hasFile('photos')){
-                if(DynamicFrontend::all()->count() <= 3){
-                    $photos = $request->file('photos');
-                    foreach($photos as $photo){
-                        $photo->store('assets/dynamicfes', 'public');
-                        array_push($this->dataPhoto, $photo);
-                    }
-                } else {
-                    $photos = $request->file('photos');
-                    foreach($photos as $photo){
-                        $photo->store('assets/dynamicfes', 'public');
-                        array_push($this->dataPhoto, $photo);
-                    }
+            if($request->hasFile('photos'))
+            {
+                $photos = $request->file('photos');
+                foreach ( $photos as $photo ) {
+                    $dataToStore = $photo->store('assets/dynamicfes', 'public');
+                    array_push($this->dataPhoto, $dataToStore);
                 }
             }
 
             if(isset($this->dataPhoto)){
                 foreach($this->dataPhoto as $data){
-                    DynamicFrontend::create('photos', $this->$data);
+                    $dataToUpload = [
+                        'photos' => $data
+                    ];
+                    DynamicFrontend::create($dataToUpload);
                 }
                 unset($this->dataPhoto);
-                return redirect()->route('home');
+                return redirect()->route('dynamicfe.index');
             }
             unset($this->dataPhoto);
-            return redirect()->route('home');
+            return redirect()->route('dynamicfe.index');
 
         }catch(Exception $e){
             return redirect()->back()->with('error', $e->getMessage());
@@ -52,31 +48,65 @@ class DynamicFrontendController extends Controller
             $data = DynamicFrontend::query();
             return DataTables::of($data)
                 ->addColumn('action', function ($item) {
-                    return '
-                        <div class="btn-group>
-                            <div class="dropdown>
-                                <button class ="btn btn-primary dropdown-toggle mr-1 mb-1" type="button" data-toggle="dropdown">
-                                    Aksi
-                                </button>
-                                <div class="dropdown-menu">
-                                    <form action ="' . route('dynamicfe.destroy', $item->id) . '" method="POST">
-                                    ' . method_field('delete') . csrf_field() . '
+                    if($item->status == 1){
+                        return '
+                            <div class="btn-group>
+                                <div class="dropdown>
+                                    <button class ="btn btn-primary dropdown-toggle mr-1 mb-1" type="button" data-toggle="dropdown">
+                                        Aksi
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <form action ="' . route('dynamicfe.destroy', $item->id) . '" method="POST">
+                                        ' . method_field('delete') . csrf_field() . '
 
-                                        <button type="submit" class="dropdown-item text-danger">
-                                            Hapus
-                                        </button>
-                                    </form>
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                Hapus
+                                            </button>
+                                        </form>
+                                        <form action ="' . route('dynamicfe.update', $item->id) . '" method="POST">
+                                        ' . method_field('put') . csrf_field() . '
+
+                                            <button type="submit" class="dropdown-item">
+                                                Non Aktifkan
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ';
+                        ';
+                    } else {
+                        return '
+                                <div class="btn-group>
+                                    <div class="dropdown>
+                                        <button class ="btn btn-primary dropdown-toggle mr-1 mb-1" type="button" data-toggle="dropdown">
+                                            Aksi
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <form action ="' . route('dynamicfe.destroy', $item->id) . '" method="POST">
+                                            ' . method_field('delete') . csrf_field() . '
+                                                <input name="active" value="0" hidden/>
+                                                <button type="submit" class="dropdown-item text-danger">
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                            <form action ="' . route('dynamicfe.update', $item->id) . '" method="POST">
+                                            ' . method_field('put') . csrf_field() . '
+                                                <input name="active" value="1" hidden/>
+                                                <button type="submit" class="dropdown-item">
+                                                    Aktifkan
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            ';
+                        }
                 })
                 ->addColumn('photos', function($item) {
-                    return '
-                    <div>
-                        <img src="'. $item->photos ? Storage::url($item->photos) : "no image"  .'"/>
-                    </div>
-                    ';
+                return $item->photos ? '<img src="' . Storage::url($item->photos) . '" style="max-height: 40px;" />' : '';
+                })
+                ->addColumn('created_at', function($item){
+                    return $item->created_at ? $item->created_at->format('d-m-Y H:i:s') : '';
                 })
                 ->rawColumns(['action', 'photos'])
                 ->make();
@@ -84,10 +114,26 @@ class DynamicFrontendController extends Controller
         return view('pages.admin.dynamicfes.index');
     }
 
+    public function create()
+    {
+        return view('pages.admin.dynamicfes.create');
+    }
+
     public function destroy($id)
     {
         try{
             DynamicFrontend::where('id', $id)->delete();
+            return redirect()->route('admin.dynamicfes');
+        }catch(Exception $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        try{
+            $data = (int) $request->active;
+            DynamicFrontend::where('id', $id)->update(['status' => $data ]);
             return redirect()->route('admin.dynamicfes');
         }catch(Exception $e){
             return redirect()->back()->with('error', $e->getMessage());
