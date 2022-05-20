@@ -56,7 +56,7 @@ Store Dashboard Transactions
                         <div class="col-12 mt-2">
                             @forelse ($buyTransactions as $buy)
                             <a class="card card-list d-block"
-                                href="{{route('dashboard-transaction-details',$buy->id)}}">
+                                href="{{route('dashboard-transaction-details-buy',$buy->id)}}">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-1">

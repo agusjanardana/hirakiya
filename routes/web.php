@@ -26,6 +26,9 @@ Route::get('/success', 'CartController@success')->name('success');
 Route::post('/checkout/callback', 'CheckoutController@callback')->name('midtrans-callback');
 Route::get('/register/success', 'Auth\RegisterController@success')->name('register-success');
 
+Route::get('/search', 'SearchProductController@search')->name('search');
+
+Route::resource('comment', 'CommentsController');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/cart', 'CartController@index')->name('cart');
@@ -38,6 +41,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/transactions/{id}', 'DashboardTransactionController@details')->name('dashboard-transaction-details'); // {id}
     Route::get('/dashboard/products', 'DashboardProductController@index')->name('dashboard-product');
     Route::post('/dashboard/transactions/{id}', 'DashboardTransactionController@update')->name('dashboard-transaction-update'); // {id}
+    Route::get('/dashboard/transactions/buy/{id}', 'DashboardTransactionController@detailsBuy')->name('dashboard-transaction-details-buy'); // {id}
+
 
 
     Route::get('/dashboard/products/create', 'DashboardProductController@create')->name('dashboard-product-create');
@@ -55,6 +60,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/wishlist', 'WishlistController@index')->name('wishlist');
     Route::post('/wishlist', 'WishlistController@store')->name('wishlist-store');
     Route::get('/wishlist/{id}', 'WishlistController@destroy')->name('wishlist-delete');
+    
+    
 });
 
 Route::prefix('admin')

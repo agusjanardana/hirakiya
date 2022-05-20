@@ -5,9 +5,17 @@ Store Homepage
 @endsection
 
 @section('content')
+{{-- check if any error --}}
 <div class="page-content page-home">
     <section class="store-carousel">
         <div class="container">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <a>
+                    {{ $errors->first() }}
+                </a>
+            </div>
+            @endif
             <div class="row">
                 <div class="col-lg-12" data-aos="zoom-in">
                     <div id="storeCarousel" class="carousel slide" data-ride="carousel">
@@ -31,6 +39,23 @@ Store Homepage
     </section>
     <section class="store-trend-categories">
         <div class="container">
+            <div class="row mt-5">
+                <div class="col-md-5 mx-auto">
+                    <form action="{{ route('search') }}" method="GET" enctype="multipart/form-data">
+                        <div class="input-group">
+                            <input name="search" class="form-control border-end-0 border" type="search product"
+                                placeholder="search product..." value="" id="example-search-input">
+                            <span class="input-group-append">
+                                <button
+                                    class="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5"
+                                    type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12" data-aos="fade-up">
                     <h5>Trend Categories</h5>

@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Comment;
+use App\Models\User;
 use App\Models\Wishlist;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class DetailController extends Controller
 {
-
+    private $dataComment = array();
     /**
      * Show the application dashboard.
      *
@@ -19,12 +21,31 @@ class DetailController extends Controller
      */
     public function index(Request $request, $id)
     {
-        $product = Product::with(['galleries', 'user', 'review'])->where('slug', $id)->firstOrFail();
-        $wishlist = Wishlist::where('products_id', $product->id)->where('users_id', Auth::user()->id)->first();
-        
+        $product = Product::with(['galleries', 'user'])->where('slug', $id)->firstOrFail();
+        $comment = Comment::with(['user'])->where('products_id', $product->id)->get();
+
+        foreach ($comment as $comm){
+
+            $commentToReturn = [
+                'description' => $comm->description,
+                'user_id' => $comm->users_id,
+                'user' => User::where('id', $comm->users_id)->first(),
+            ];
+            array_push($this->dataComment, $commentToReturn);
+        }
+
+        if(Auth::user()){
+            $wishlist = Wishlist::where('products_id', $product->id)->where('users_id', Auth::user()->id)->first();
+            return view('pages.detail', [
+                'product' => $product,
+                'wishlist' => $wishlist,
+                'comment' => $this->dataComment,
+            ]);
+        }
+
         return view('pages.detail', [
             'product' => $product,
-            'wishlist' => $wishlist
+            'comment' => $this->dataComment,
         ]);
     }
 
