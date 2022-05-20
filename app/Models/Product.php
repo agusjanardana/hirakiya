@@ -37,14 +37,19 @@ class Product extends Model
 
     }
 
-    public function review()
+    // relation to transaction detail
+    public function transactionDetails()
     {
-        return $this->hasMany(Review::class, 'products_id', 'id');
-        // select Review.products_id == product.id
+        return $this->hasMany(TransactionDetail::class, 'products_id', 'id');
     }
 
     public function wishlist()
     {
         return $this->hasMany(Wishlist::class, 'products_id', 'id');
+    }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'products_id', 'id');
     }
 }
