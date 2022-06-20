@@ -65,20 +65,18 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
-                                    <img src="/images/icon-user.png" alt=""
-                                        class="rounded-circle mr-2 profile-picture" />
+                                    <img src="{{ Auth::user()->user_photo ? Storage::url(Auth::user()->user_photo) : '/images/icon-user.png' }}"
+                                        alt="" class="rounded-circle mr-2 profile-picture" />
                                     {{ Auth::user()->name }}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
-                                    <a class="dropdown-item"
-                                        href={{ route('dashboard-settings-account') }}>Settings</a>
+                                    <a class="dropdown-item" href={{ route('dashboard-settings-account') }}>Settings</a>
                                     <div class="dropdown-divider"></div>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">Logout</a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        class="d-none">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>
@@ -86,14 +84,14 @@
                             <li class="nav-item">
                                 <a class="nav-link d-inline-block mt-2" href="{{ route('cart') }}">
                                     @php
-                                        $carts = \App\Models\Cart::where('users_id', Auth::user()->id)->count();
+                                    $carts = \App\Models\Cart::where('users_id', Auth::user()->id)->count();
                                     @endphp
 
                                     @if ($carts > 0)
-                                        <img src="/images/icon-cart-filled.svg">
-                                        <div class="cart-badge">{{ $carts }}</div>
+                                    <img src="/images/icon-cart-filled.svg">
+                                    <div class="cart-badge">{{ $carts }}</div>
                                     @else
-                                        <img src="/images/icon-cart-empty.svg" alt="" />
+                                    <img src="/images/icon-cart-empty.svg" alt="" />
                                     @endif
                                 </a>
                             </li>

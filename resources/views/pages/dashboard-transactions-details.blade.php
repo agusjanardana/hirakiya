@@ -85,6 +85,7 @@ Store Dashboard Details
                                                 <div class="product-title">Province</div>
                                                 <div class="product-subtitle">{{
                                                     App\Models\Province::find($datas->transaction->user->provinces_id)->name
+                                                    ?? 'Not Found'
                                                     }}
                                                 </div>
                                             </div>
@@ -92,6 +93,7 @@ Store Dashboard Details
                                                 <div class="product-title">City</div>
                                                 <div class="product-subtitle">{{
                                                     App\Models\Regency::find($datas->transaction->user->regencies_id)->name
+                                                    ?? 'Not Found'
                                                     }}</div>
                                             </div>
                                             <div class="col-12 col-md-6">
